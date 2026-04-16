@@ -1,0 +1,15 @@
+name = "retained-cron"
+main = "index.ts"
+compatibility_date = "2024-09-23"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "retained-db"
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+
+[vars]
+APP_URL = "https://retained.pages.dev"
+FROM_EMAIL = "hello@retained.dev"
+
+[triggers]
+crons = ["0 * * * *"]

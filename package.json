@@ -1,0 +1,27 @@
+{
+  "name": "retained",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/web"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:web\" \"npm run dev:worker\"",
+    "dev:web": "cd apps/web && npm run dev",
+    "dev:worker": "wrangler pages dev apps/web/dist --d1=DB",
+    "build": "cd apps/web && npm run build",
+    "db:init": "wrangler d1 execute retained-db --file=schema/init.sql",
+    "db:init:local": "wrangler d1 execute retained-db --local --file=schema/init.sql",
+    "deploy": "npm run build && wrangler pages deploy apps/web/dist",
+    "deploy:cron": "wrangler deploy --config workers/cron/wrangler.toml"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250404.0",
+    "concurrently": "^9.1.0",
+    "typescript": "^5.7.2",
+    "wrangler": "^3.109.2"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0"
+  }
+}
