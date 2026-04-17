@@ -72,11 +72,13 @@ wrangler d1 create retained-db
 # 2. Run schema
 npm run db:init
 
-# 3. Deploy (creates the Pages project and gives you your *.pages.dev URL)
+# 3. Deploy (creates the Pages project on Cloudflare)
 npm run deploy
 
-# 4. Update APP_URL and FROM_EMAIL in wrangler.toml and workers/cron/wrangler.toml
-#    APP_URL is the *.pages.dev URL from the previous step (or your custom domain)
+# 4. Find your stable production URL in the Cloudflare dashboard under Pages > your project > Deployments.
+#    Each deploy also generates a unique preview URL — ignore those. The stable URL looks like:
+#    https://your-project-name.pages.dev
+#    Update APP_URL in wrangler.toml and workers/cron/wrangler.toml with this URL.
 
 # 5. Set secrets
 wrangler pages secret put ANTHROPIC_API_KEY
