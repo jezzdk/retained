@@ -7,6 +7,7 @@ binding = "DB"
 database_name = "retained-db"
 database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
 
+# These are production values. For local development, .dev.vars overrides them.
 [vars]
 APP_URL = "https://retained.pages.dev"
-FROM_EMAIL = "hello@retained.dev"
+FROM_EMAIL = "no-reply@retained.dev"

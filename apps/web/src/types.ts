@@ -41,6 +41,7 @@ export type AppState =
   | { view: 'url_teaser'; url: string; estimatedQuestions: number }
   | { view: 'otp_entry'; url: string; estimatedQuestions: number; email: string }
   | { view: 'quiz_loading'; url: string }
+  | { view: 'final_loading' }
   | {
       view: 'pre_test';
       scheduleId: string;

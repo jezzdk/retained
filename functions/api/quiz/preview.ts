@@ -1,8 +1,12 @@
 import type { Env } from '../../_shared/types';
 import { jsonError, jsonOk } from '../../_shared/auth';
-import { fetchArticleContent, validateWordCount, estimateQuestionCount } from '../../_shared/content';
+import {
+  fetchArticleContent,
+  validateWordCount,
+  estimateQuestionCount,
+} from '../../_shared/content';
 
-export const onRequestPost: PagesFunction<Env> = async (context) => {
+export const onRequestPost: PagesFunction<Env> = async context => {
   const { request } = context;
 
   let body: { url?: string };

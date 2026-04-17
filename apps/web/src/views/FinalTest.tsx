@@ -28,11 +28,17 @@ export default function FinalTest({ state, onNext }: Props) {
       });
 
       setTimeout(() => {
-        api.submitFinalAnswers(scheduleId, newAnswers).then(data => {
-          onNext({ view: 'final_results', data });
-        }).catch(err => {
-          onNext({ view: 'error', message: err instanceof ApiError ? err.message : 'Failed to submit answers.' });
-        });
+        api
+          .submitFinalAnswers(scheduleId, newAnswers)
+          .then(data => {
+            onNext({ view: 'final_results', data });
+          })
+          .catch(err => {
+            onNext({
+              view: 'error',
+              message: err instanceof ApiError ? err.message : 'Failed to submit answers.',
+            });
+          });
       }, 1200);
     } else {
       setTimeout(() => {

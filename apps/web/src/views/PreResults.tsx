@@ -41,8 +41,11 @@ export default function PreResults({ state, onNext }: Props) {
   if (scheduledAt) {
     const date = new Date(scheduledAt);
     const formatted = date.toLocaleString(undefined, {
-      weekday: 'long', month: 'long', day: 'numeric',
-      hour: 'numeric', minute: '2-digit',
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: '2-digit',
     });
     return (
       <div className="space-y-6 text-center py-10">
@@ -50,8 +53,8 @@ export default function PreResults({ state, onNext }: Props) {
         <h1 className="text-2xl font-bold text-gray-900">Study reminder scheduled</h1>
         <p className="text-gray-600 max-w-sm mx-auto">
           We'll email you your study reminder on{' '}
-          <strong className="text-gray-800">{formatted}</strong>.
-          The email will include the article link and a button to record when you've finished reading.
+          <strong className="text-gray-800">{formatted}</strong>. The email will include the article
+          link and a button to record when you've finished reading.
         </p>
         <p className="text-gray-400 text-sm">You can close this tab.</p>
         <button
@@ -68,7 +71,9 @@ export default function PreResults({ state, onNext }: Props) {
     <div className="space-y-8">
       <div className="space-y-2">
         <h1 className="text-2xl font-bold text-gray-900">Pre-test complete</h1>
-        <p className="text-gray-500">Don't worry about the score — most people struggle before reading. That's the point.</p>
+        <p className="text-gray-500">
+          Don't worry about the score — most people struggle before reading. That's the point.
+        </p>
       </div>
 
       {/* Score card */}
@@ -85,7 +90,8 @@ export default function PreResults({ state, onNext }: Props) {
           />
         </div>
         <p className="text-sm text-gray-500">
-          Your pre-test score. After studying, you'll take the same quiz again and see how much you improved.
+          Your pre-test score. After studying, you'll take the same quiz again and see how much you
+          improved.
         </p>
       </div>
 
@@ -117,7 +123,9 @@ export default function PreResults({ state, onNext }: Props) {
       </div>
 
       {error && (
-        <p className="text-red-600 text-sm bg-red-50 border border-red-200 rounded-lg px-4 py-3">{error}</p>
+        <p className="text-red-600 text-sm bg-red-50 border border-red-200 rounded-lg px-4 py-3">
+          {error}
+        </p>
       )}
 
       <button

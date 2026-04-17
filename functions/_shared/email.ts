@@ -46,7 +46,11 @@ export function otpEmailText(code: string): string {
   return `Your Retained verification code: ${code}\n\nThis code expires in 10 minutes.\n\nIf you didn't request this, you can safely ignore this email.`;
 }
 
-export function studyReminderHtml(articleUrl: string, articleDomain: string, studiedUrl: string): string {
+export function studyReminderHtml(
+  articleUrl: string,
+  articleDomain: string,
+  studiedUrl: string
+): string {
   return `<!DOCTYPE html>
 <html>
 <body style="font-family:sans-serif;max-width:560px;margin:40px auto;padding:0 24px;color:#1a1a1a">

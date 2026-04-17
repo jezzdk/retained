@@ -41,14 +41,17 @@ export default function StudyComplete({ state, onNext }: Props) {
   if (scheduled) {
     const date = new Date(scheduled);
     const formatted = date.toLocaleDateString(undefined, {
-      weekday: 'long', month: 'long', day: 'numeric',
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
     });
     return (
       <div className="space-y-6 text-center py-10">
         <div className="text-5xl">🎉</div>
         <h1 className="text-2xl font-bold text-gray-900">Final test scheduled</h1>
         <p className="text-gray-600">
-          We'll email you your final test on <strong>{formatted}</strong>. Check your inbox then to see how much you retained.
+          We'll email you your final test on <strong>{formatted}</strong>. Check your inbox then to
+          see how much you retained.
         </p>
         <p className="text-gray-400 text-sm">You can close this tab.</p>
       </div>
@@ -61,8 +64,8 @@ export default function StudyComplete({ state, onNext }: Props) {
         <div className="text-4xl mb-2">📚</div>
         <h1 className="text-2xl font-bold text-gray-900">Great work — study session logged!</h1>
         <p className="text-gray-500">
-          You've finished studying. Now choose when you'd like to take your final test. Waiting at least a few days
-          maximises the spaced-retrieval benefit.
+          You've finished studying. Now choose when you'd like to take your final test. Waiting at
+          least a few days maximises the spaced-retrieval benefit.
         </p>
       </div>
 
@@ -93,7 +96,9 @@ export default function StudyComplete({ state, onNext }: Props) {
       </div>
 
       {error && (
-        <p className="text-red-600 text-sm bg-red-50 border border-red-200 rounded-lg px-4 py-3">{error}</p>
+        <p className="text-red-600 text-sm bg-red-50 border border-red-200 rounded-lg px-4 py-3">
+          {error}
+        </p>
       )}
 
       <button

@@ -13,8 +13,11 @@ export default function UrlTeaser({ state, onNext }: Props) {
   const [error, setError] = useState('');
 
   const domain = (() => {
-    try { return new URL(state.url).hostname.replace(/^www\./, ''); }
-    catch { return state.url; }
+    try {
+      return new URL(state.url).hostname.replace(/^www\./, '');
+    } catch {
+      return state.url;
+    }
   })();
 
   async function handleSubmit(e: React.FormEvent) {
@@ -23,9 +26,18 @@ export default function UrlTeaser({ state, onNext }: Props) {
     setLoading(true);
     try {
       await api.sendOtp(email.trim().toLowerCase());
-      onNext({ view: 'otp_entry', url: state.url, estimatedQuestions: state.estimatedQuestions, email: email.trim().toLowerCase() });
+      onNext({
+        view: 'otp_entry',
+        url: state.url,
+        estimatedQuestions: state.estimatedQuestions,
+        email: email.trim().toLowerCase(),
+      });
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : 'Failed to send verification code. Please try again.');
+      setError(
+        err instanceof ApiError
+          ? err.message
+          : 'Failed to send verification code. Please try again.'
+      );
     } finally {
       setLoading(false);
     }
@@ -39,7 +51,8 @@ export default function UrlTeaser({ state, onNext }: Props) {
         <p className="text-gray-600">
           We found enough content to generate{' '}
           <span className="font-bold text-indigo-600">{state.estimatedQuestions} questions</span>.
-          Enter your email to get started — we'll send your study reminder and final test link there.
+          Enter your email to get started — we'll send your study reminder and final test link
+          there.
         </p>
       </div>
 
@@ -61,7 +74,9 @@ export default function UrlTeaser({ state, onNext }: Props) {
         </div>
 
         {error && (
-          <p className="text-red-600 text-sm bg-red-50 border border-red-200 rounded-lg px-4 py-3">{error}</p>
+          <p className="text-red-600 text-sm bg-red-50 border border-red-200 rounded-lg px-4 py-3">
+            {error}
+          </p>
         )}
 
         <button

@@ -2,7 +2,7 @@ import type { Env, Question, StoredAnswer, FinalResult } from '../../../_shared/
 import { jsonError, jsonOk } from '../../../_shared/auth';
 import { gradeAnswer } from '../../../_shared/claude';
 
-export const onRequestPost: PagesFunction<Env> = async (context) => {
+export const onRequestPost: PagesFunction<Env> = async context => {
   const { request, env, params } = context;
   const scheduleId = params.schedule_id as string;
 
@@ -17,14 +17,16 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
   const row = await env.DB.prepare(
     'SELECT questions_json, pre_answers_json, final_answers_json, completed_at, studied_at, test_sent FROM schedules WHERE id = ?'
-  ).bind(scheduleId).first<{
-    questions_json: string;
-    pre_answers_json: string | null;
-    final_answers_json: string | null;
-    completed_at: number | null;
-    studied_at: number | null;
-    test_sent: number;
-  }>();
+  )
+    .bind(scheduleId)
+    .first<{
+      questions_json: string;
+      pre_answers_json: string | null;
+      final_answers_json: string | null;
+      completed_at: number | null;
+      studied_at: number | null;
+      test_sent: number;
+    }>();
 
   if (!row) return jsonError('Schedule not found', 404);
   if (row.completed_at) return jsonError('This session has been completed', 410);
@@ -52,7 +54,12 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     if (question.type === 'mcq') {
       finalCorrect = userAnswer.trim() === question.answer.trim();
     } else {
-      finalCorrect = await gradeAnswer(env.ANTHROPIC_API_KEY, question.question, question.answer, userAnswer);
+      finalCorrect = await gradeAnswer(
+        env.ANTHROPIC_API_KEY,
+        question.question,
+        question.answer,
+        userAnswer
+      );
     }
 
     finalStoredAnswers.push({ questionId: question.id, answer: userAnswer, correct: finalCorrect });
@@ -72,9 +79,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   const finalScore = results.filter(r => r.final_correct).length;
   const now = Math.floor(Date.now() / 1000);
 
-  await env.DB.prepare(
-    'UPDATE schedules SET final_answers_json = ?, completed_at = ? WHERE id = ?'
-  ).bind(JSON.stringify(finalStoredAnswers), now, scheduleId).run();
+  await env.DB.prepare('UPDATE schedules SET final_answers_json = ?, completed_at = ? WHERE id = ?')
+    .bind(JSON.stringify(finalStoredAnswers), now, scheduleId)
+    .run();
 
   return jsonOk({
     pre_score: preScore,

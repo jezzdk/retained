@@ -14,22 +14,31 @@ export default function QuizLoading({ state, onNext }: Props) {
     if (called.current) return;
     called.current = true;
 
-    api.generateQuiz(state.url).then(({ schedule_id, questions }) => {
-      onNext({
-        view: 'pre_test',
-        scheduleId: schedule_id,
-        questions,
-        currentIndex: 0,
-        answers: [],
-        results: [],
+    api
+      .generateQuiz(state.url)
+      .then(({ schedule_id, questions }) => {
+        onNext({
+          view: 'pre_test',
+          scheduleId: schedule_id,
+          questions,
+          currentIndex: 0,
+          answers: [],
+          results: [],
+        });
+      })
+      .catch(err => {
+        if (err instanceof ApiError && err.status === 401) {
+          onNext({ view: 'error', message: 'Your session expired. Please start over.' });
+        } else {
+          onNext({
+            view: 'error',
+            message: err instanceof Error ? err.message : 'Failed to generate quiz.',
+          });
+        }
       });
-    }).catch(err => {
-      if (err instanceof ApiError && err.status === 401) {
-        onNext({ view: 'error', message: 'Your session expired. Please start over.' });
-      } else {
-        onNext({ view: 'error', message: err instanceof Error ? err.message : 'Failed to generate quiz.' });
-      }
-    });
+    // onNext and state.url are intentionally absent: this must fire exactly once on mount.
+    // called.current is the StrictMode guard against double-invocation.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -40,7 +49,9 @@ export default function QuizLoading({ state, onNext }: Props) {
       </div>
       <div className="space-y-1">
         <p className="text-lg font-semibold text-gray-800">Generating your quiz…</p>
-        <p className="text-gray-500 text-sm">Reading the article and crafting questions. This takes about 10–20 seconds.</p>
+        <p className="text-gray-500 text-sm">
+          Reading the article and crafting questions. This takes about 10–20 seconds.
+        </p>
       </div>
     </div>
   );

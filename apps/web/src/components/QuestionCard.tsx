@@ -49,9 +49,11 @@ function McqCard({ question, scheduleId, onAnswered }: Props) {
 
       <div className="space-y-2">
         {question.options!.map((option, i) => {
-          let cls = 'flex items-center gap-3 w-full p-4 rounded-lg border text-left transition-colors ';
+          let cls =
+            'flex items-center gap-3 w-full p-4 rounded-lg border text-left transition-colors ';
           if (selected === null) {
-            cls += 'border-gray-200 hover:border-indigo-400 hover:bg-indigo-50 cursor-pointer text-gray-700';
+            cls +=
+              'border-gray-200 hover:border-indigo-400 hover:bg-indigo-50 cursor-pointer text-gray-700';
           } else if (selected === i) {
             cls += correct
               ? 'border-green-500 bg-green-50 text-green-800 cursor-default'
@@ -61,12 +63,21 @@ function McqCard({ question, scheduleId, onAnswered }: Props) {
           }
 
           return (
-            <button key={i} className={cls} onClick={() => handleSelect(i)} disabled={selected !== null}>
-              <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
-                selected === i
-                  ? correct ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
-                  : 'bg-gray-100 text-gray-500'
-              }`}>
+            <button
+              key={i}
+              className={cls}
+              onClick={() => handleSelect(i)}
+              disabled={selected !== null}
+            >
+              <span
+                className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
+                  selected === i
+                    ? correct
+                      ? 'bg-green-500 text-white'
+                      : 'bg-red-500 text-white'
+                    : 'bg-gray-100 text-gray-500'
+                }`}
+              >
                 {selected === i && correct !== null ? (correct ? '✓' : '✗') : labels[i]}
               </span>
               <span className="text-sm">{option}</span>

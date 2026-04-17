@@ -36,7 +36,8 @@ export async function generateQuestions(apiKey: string, content: string): Promis
     tools: [
       {
         name: 'generate_questions',
-        description: 'Generate quiz questions from article content to help readers retain information',
+        description:
+          'Generate quiz questions from article content to help readers retain information',
         input_schema: questionSchema,
       },
     ],

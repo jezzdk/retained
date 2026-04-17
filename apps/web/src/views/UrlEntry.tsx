@@ -29,7 +29,9 @@ export default function UrlEntry({ onNext }: Props) {
       const { estimatedQuestions } = await api.previewUrl(parsed.href);
       onNext({ view: 'url_teaser', url: parsed.href, estimatedQuestions });
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : 'Could not reach that URL. Please try again.');
+      setError(
+        err instanceof ApiError ? err.message : 'Could not reach that URL. Please try again.'
+      );
     } finally {
       setLoading(false);
     }
@@ -40,7 +42,8 @@ export default function UrlEntry({ onNext }: Props) {
       <div className="space-y-2">
         <h1 className="text-3xl font-bold text-gray-900">Learn more. Retain more.</h1>
         <p className="text-gray-500 text-lg">
-          Paste an article URL and we'll turn it into a spaced-retrieval study session using the science of pretesting.
+          Paste an article URL and we'll turn it into a spaced-retrieval study session using the
+          science of pretesting.
         </p>
       </div>
 
@@ -62,7 +65,9 @@ export default function UrlEntry({ onNext }: Props) {
         </div>
 
         {error && (
-          <p className="text-red-600 text-sm bg-red-50 border border-red-200 rounded-lg px-4 py-3">{error}</p>
+          <p className="text-red-600 text-sm bg-red-50 border border-red-200 rounded-lg px-4 py-3">
+            {error}
+          </p>
         )}
 
         <button
@@ -75,11 +80,22 @@ export default function UrlEntry({ onNext }: Props) {
       </form>
 
       <div className="border-t border-gray-200 pt-6">
-        <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">How it works</h2>
+        <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">
+          How it works
+        </h2>
         <ol className="space-y-2 text-sm text-gray-600">
-          <li className="flex gap-3"><span className="text-indigo-500 font-bold">1.</span> Take a pre-test before reading — this primes your brain</li>
-          <li className="flex gap-3"><span className="text-indigo-500 font-bold">2.</span> Read the article, knowing exactly what to focus on</li>
-          <li className="flex gap-3"><span className="text-indigo-500 font-bold">3.</span> Take a final test days later — cement what you learned</li>
+          <li className="flex gap-3">
+            <span className="text-indigo-500 font-bold">1.</span> Take a pre-test before reading —
+            this primes your brain
+          </li>
+          <li className="flex gap-3">
+            <span className="text-indigo-500 font-bold">2.</span> Read the article, knowing exactly
+            what to focus on
+          </li>
+          <li className="flex gap-3">
+            <span className="text-indigo-500 font-bold">3.</span> Take a final test days later —
+            cement what you learned
+          </li>
         </ol>
       </div>
     </div>

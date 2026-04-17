@@ -3,7 +3,9 @@ const CHARS_PER_TOKEN = 4;
 const MAX_CHARS = MAX_TOKENS * CHARS_PER_TOKEN;
 const MIN_WORDS = 1500;
 
-export async function fetchArticleContent(url: string): Promise<{ text: string; wordCount: number }> {
+export async function fetchArticleContent(
+  url: string
+): Promise<{ text: string; wordCount: number }> {
   const res = await fetch(url, {
     headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Retained/1.0)' },
     redirect: 'follow',

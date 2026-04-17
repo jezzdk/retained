@@ -34,7 +34,7 @@ export default function App() {
   }, []);
 
   async function loadFinalTest(scheduleId: string) {
-    setState({ view: 'quiz_loading', url: '' });
+    setState({ view: 'final_loading' });
     try {
       const { questions } = await api.getFinalQuestions(scheduleId);
       setState({
@@ -49,7 +49,10 @@ export default function App() {
       if (err instanceof ApiError && err.status === 410) {
         setState({ view: 'completed' });
       } else {
-        setState({ view: 'error', message: err instanceof Error ? err.message : 'Failed to load final test.' });
+        setState({
+          view: 'error',
+          message: err instanceof Error ? err.message : 'Failed to load final test.',
+        });
       }
     }
   }
@@ -70,6 +73,15 @@ export default function App() {
         {state.view === 'url_teaser' && <UrlTeaser state={state} onNext={go} />}
         {state.view === 'otp_entry' && <OtpEntry state={state} onNext={go} />}
         {state.view === 'quiz_loading' && <QuizLoading state={state} onNext={go} />}
+        {state.view === 'final_loading' && (
+          <div className="flex flex-col items-center justify-center py-20 space-y-6 text-center">
+            <div className="relative w-16 h-16">
+              <div className="absolute inset-0 rounded-full border-4 border-indigo-100" />
+              <div className="absolute inset-0 rounded-full border-4 border-indigo-600 border-t-transparent animate-spin" />
+            </div>
+            <p className="text-lg font-semibold text-gray-800">Loading your final test…</p>
+          </div>
+        )}
         {state.view === 'pre_test' && <PreTest state={state} onNext={go} />}
         {state.view === 'pre_results' && <PreResults state={state} onNext={go} />}
         {state.view === 'study_complete' && <StudyComplete state={state} onNext={go} />}

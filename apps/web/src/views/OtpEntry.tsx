@@ -14,7 +14,9 @@ export default function OtpEntry({ state, onNext }: Props) {
   const [resent, setResent] = useState(false);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-  useEffect(() => { inputRefs.current[0]?.focus(); }, []);
+  useEffect(() => {
+    inputRefs.current[0]?.focus();
+  }, []);
 
   const code = digits.join('');
 
@@ -74,8 +76,8 @@ export default function OtpEntry({ state, onNext }: Props) {
       <div className="space-y-2">
         <h1 className="text-2xl font-bold text-gray-900">Check your email</h1>
         <p className="text-gray-500">
-          We sent a 6-digit code to <strong className="text-gray-700">{state.email}</strong>.
-          It expires in 10 minutes.
+          We sent a 6-digit code to <strong className="text-gray-700">{state.email}</strong>. It
+          expires in 10 minutes.
         </p>
       </div>
 
@@ -84,7 +86,9 @@ export default function OtpEntry({ state, onNext }: Props) {
           {digits.map((d, i) => (
             <input
               key={i}
-              ref={el => { inputRefs.current[i] = el; }}
+              ref={el => {
+                inputRefs.current[i] = el;
+              }}
               type="text"
               inputMode="numeric"
               maxLength={1}
@@ -98,7 +102,9 @@ export default function OtpEntry({ state, onNext }: Props) {
         </div>
 
         {error && (
-          <p className="text-red-600 text-sm bg-red-50 border border-red-200 rounded-lg px-4 py-3 text-center">{error}</p>
+          <p className="text-red-600 text-sm bg-red-50 border border-red-200 rounded-lg px-4 py-3 text-center">
+            {error}
+          </p>
         )}
 
         <button
@@ -119,7 +125,16 @@ export default function OtpEntry({ state, onNext }: Props) {
           </button>
         )}
         <div>
-          <button onClick={() => onNext({ view: 'url_teaser', url: state.url, estimatedQuestions: state.estimatedQuestions })} className="text-sm text-gray-400 hover:text-gray-600 transition-colors">
+          <button
+            onClick={() =>
+              onNext({
+                view: 'url_teaser',
+                url: state.url,
+                estimatedQuestions: state.estimatedQuestions,
+              })
+            }
+            className="text-sm text-gray-400 hover:text-gray-600 transition-colors"
+          >
             ← Back
           </button>
         </div>

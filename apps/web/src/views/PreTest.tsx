@@ -30,11 +30,17 @@ export default function PreTest({ state, onNext }: Props) {
 
       // Kick off submission after a short pause to let user see last result
       setTimeout(() => {
-        api.submitPreAnswers(scheduleId, newAnswers).then(score => {
-          onNext({ view: 'pre_results', scheduleId, score: score.score, total: score.total });
-        }).catch(err => {
-          onNext({ view: 'error', message: err instanceof ApiError ? err.message : 'Failed to submit answers.' });
-        });
+        api
+          .submitPreAnswers(scheduleId, newAnswers)
+          .then(score => {
+            onNext({ view: 'pre_results', scheduleId, score: score.score, total: score.total });
+          })
+          .catch(err => {
+            onNext({
+              view: 'error',
+              message: err instanceof ApiError ? err.message : 'Failed to submit answers.',
+            });
+          });
       }, 1200);
     } else {
       setTimeout(() => {
@@ -55,7 +61,8 @@ export default function PreTest({ state, onNext }: Props) {
       <div className="space-y-1">
         <h1 className="text-xl font-bold text-gray-900">Pre-test</h1>
         <p className="text-gray-500 text-sm">
-          Answer as best you can — you haven't read the article yet, and that's intentional. This primes your brain.
+          Answer as best you can — you haven't read the article yet, and that's intentional. This
+          primes your brain.
         </p>
       </div>
 

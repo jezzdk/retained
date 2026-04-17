@@ -9,7 +9,7 @@ database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
 
 [vars]
 APP_URL = "https://retained.pages.dev"
-FROM_EMAIL = "hello@retained.dev"
+FROM_EMAIL = "no-reply@retained.dev"
 
 [triggers]
 crons = ["0 * * * *"]

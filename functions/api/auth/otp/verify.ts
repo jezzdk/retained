@@ -1,7 +1,7 @@
 import type { Env } from '../../../_shared/types';
-import { hashCode, sessionCookie, jsonError, jsonOk } from '../../../_shared/auth';
+import { hashCode, sessionCookie, jsonError } from '../../../_shared/auth';
 
-export const onRequestPost: PagesFunction<Env> = async (context) => {
+export const onRequestPost: PagesFunction<Env> = async context => {
   const { request, env } = context;
 
   let body: { email?: string; code?: string };
@@ -23,7 +23,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
   const attempt = await env.DB.prepare(
     'SELECT id, used FROM otp_attempts WHERE email = ? AND code_hash = ? AND expires_at > ? ORDER BY created_at DESC LIMIT 1'
-  ).bind(email, codeHash, now).first<{ id: string; used: number }>();
+  )
+    .bind(email, codeHash, now)
+    .first<{ id: string; used: number }>();
 
   if (!attempt) {
     return jsonError('Invalid or expired code', 400);
@@ -33,16 +35,16 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     return jsonError('This code has already been used', 410);
   }
 
-  await env.DB.prepare(
-    'UPDATE otp_attempts SET used = 1 WHERE id = ?'
-  ).bind(attempt.id).run();
+  await env.DB.prepare('UPDATE otp_attempts SET used = 1 WHERE id = ?').bind(attempt.id).run();
 
   const sessionId = crypto.randomUUID();
   const expiresAt = now + 86400;
 
   await env.DB.prepare(
     'INSERT INTO sessions (id, email, expires_at, created_at) VALUES (?, ?, ?, ?)'
-  ).bind(sessionId, email, expiresAt, now).run();
+  )
+    .bind(sessionId, email, expiresAt, now)
+    .run();
 
   return new Response(JSON.stringify({ success: true }), {
     headers: {

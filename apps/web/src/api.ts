@@ -12,7 +12,10 @@ async function request<T>(path: string, options?: RequestInit): Promise<T> {
 }
 
 export class ApiError extends Error {
-  constructor(message: string, public status: number) {
+  constructor(
+    message: string,
+    public status: number
+  ) {
     super(message);
   }
 }
@@ -27,14 +30,21 @@ export const api = {
   },
 
   verifyOtp(email: string, code: string): Promise<{ success: boolean }> {
-    return request('/api/auth/otp/verify', { method: 'POST', body: JSON.stringify({ email, code }) });
+    return request('/api/auth/otp/verify', {
+      method: 'POST',
+      body: JSON.stringify({ email, code }),
+    });
   },
 
   generateQuiz(url: string): Promise<{ schedule_id: string; questions: Question[] }> {
     return request('/api/quiz/generate', { method: 'POST', body: JSON.stringify({ url }) });
   },
 
-  gradeAnswer(scheduleId: string, questionId: string, answer: string): Promise<{ correct: boolean }> {
+  gradeAnswer(
+    scheduleId: string,
+    questionId: string,
+    answer: string
+  ): Promise<{ correct: boolean }> {
     return request(`/api/quiz/${scheduleId}/grade`, {
       method: 'POST',
       body: JSON.stringify({ questionId, answer }),

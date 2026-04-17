@@ -4,7 +4,8 @@ export default function Completed() {
       <div className="text-5xl">✅</div>
       <h1 className="text-2xl font-bold text-gray-900">Session completed</h1>
       <p className="text-gray-500 max-w-md">
-        This session has already been completed and its links are no longer active. Start a new session to study another article.
+        This session has already been completed and its links are no longer active. Start a new
+        session to study another article.
       </p>
       <a
         href="/"

@@ -3,7 +3,7 @@ import { getSession, jsonError, jsonOk } from '../../_shared/auth';
 import { fetchArticleContent, validateWordCount, truncateContent } from '../../_shared/content';
 import { generateQuestions } from '../../_shared/claude';
 
-export const onRequestPost: PagesFunction<Env> = async (context) => {
+export const onRequestPost: PagesFunction<Env> = async context => {
   const { request, env } = context;
 
   const session = await getSession(request, env);
@@ -47,7 +47,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
   await env.DB.prepare(
     'INSERT INTO schedules (id, session_id, email, url, questions_json, created_at) VALUES (?, ?, ?, ?, ?, ?)'
-  ).bind(scheduleId, session.id, session.email, url, JSON.stringify(questions), now).run();
+  )
+    .bind(scheduleId, session.id, session.email, url, JSON.stringify(questions), now)
+    .run();
 
   const questionsForClient = questions.map(({ answer: _answer, ...q }) => q);
 

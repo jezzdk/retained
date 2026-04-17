@@ -2,7 +2,7 @@ import type { Env, Question } from '../../../_shared/types';
 import { getSession, jsonError, jsonOk } from '../../../_shared/auth';
 import { gradeAnswer } from '../../../_shared/claude';
 
-export const onRequestPost: PagesFunction<Env> = async (context) => {
+export const onRequestPost: PagesFunction<Env> = async context => {
   const { request, env, params } = context;
   const scheduleId = params.schedule_id as string;
 
@@ -22,7 +22,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
   const row = await env.DB.prepare(
     'SELECT questions_json, completed_at FROM schedules WHERE id = ? AND session_id = ?'
-  ).bind(scheduleId, session.id).first<{ questions_json: string; completed_at: number | null }>();
+  )
+    .bind(scheduleId, session.id)
+    .first<{ questions_json: string; completed_at: number | null }>();
 
   if (!row) return jsonError('Schedule not found', 404);
   if (row.completed_at) return jsonError('This session has been completed', 410);
@@ -35,7 +37,12 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   if (question.type === 'mcq') {
     correct = body.answer.trim() === question.answer.trim();
   } else {
-    correct = await gradeAnswer(env.ANTHROPIC_API_KEY, question.question, question.answer, body.answer);
+    correct = await gradeAnswer(
+      env.ANTHROPIC_API_KEY,
+      question.question,
+      question.answer,
+      body.answer
+    );
   }
 
   return jsonOk({ correct });

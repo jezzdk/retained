@@ -2,7 +2,7 @@ import type { Env } from '../../../_shared/types';
 import { hashCode, jsonError, jsonOk } from '../../../_shared/auth';
 import { sendEmail, otpEmailHtml, otpEmailText } from '../../../_shared/email';
 
-export const onRequestPost: PagesFunction<Env> = async (context) => {
+export const onRequestPost: PagesFunction<Env> = async context => {
   const { request, env } = context;
 
   let body: { email?: string };
@@ -22,7 +22,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
   const recentCount = await env.DB.prepare(
     'SELECT COUNT(*) as cnt FROM otp_attempts WHERE email = ? AND created_at > ? AND used = 0'
-  ).bind(email, windowStart).first<{ cnt: number }>();
+  )
+    .bind(email, windowStart)
+    .first<{ cnt: number }>();
 
   if ((recentCount?.cnt ?? 0) >= 3) {
     return jsonError('Too many verification attempts. Please wait 10 minutes.', 429);
@@ -35,7 +37,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
   await env.DB.prepare(
     'INSERT INTO otp_attempts (id, email, code_hash, expires_at, created_at) VALUES (?, ?, ?, ?, ?)'
-  ).bind(id, email, codeHash, expiresAt, now).run();
+  )
+    .bind(id, email, codeHash, expiresAt, now)
+    .run();
 
   await sendEmail({
     apiKey: env.RESEND_API_KEY,
