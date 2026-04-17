@@ -72,15 +72,21 @@ wrangler d1 create retained-db
 # 2. Run schema
 npm run db:init
 
-# 3. Set secrets
-wrangler secret put ANTHROPIC_API_KEY
-wrangler secret put RESEND_API_KEY
+# 3. Deploy (creates the Pages project and gives you your *.pages.dev URL)
+npm run deploy
 
 # 4. Update APP_URL and FROM_EMAIL in wrangler.toml and workers/cron/wrangler.toml
+#    APP_URL is the *.pages.dev URL from the previous step (or your custom domain)
 
-# 5. Deploy
-npm run deploy
+# 5. Set secrets
+wrangler pages secret put ANTHROPIC_API_KEY
+wrangler pages secret put RESEND_API_KEY
+
+# 6. Deploy cron worker
 npm run deploy:cron
+
+# 7. Redeploy Pages with updated APP_URL
+npm run deploy
 ```
 
 ## License

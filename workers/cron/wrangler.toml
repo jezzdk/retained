@@ -5,10 +5,10 @@ compatibility_date = "2024-09-23"
 [[d1_databases]]
 binding = "DB"
 database_name = "retained-db"
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+database_id = "b940d3a6-1bd9-4d99-9139-ab9c56d2e695"
 
 [vars]
-APP_URL = "https://retained.pages.dev"
+APP_URL = "https://663f330f.retained-5lw.pages.dev"
 FROM_EMAIL = "no-reply@retained.dev"
 
 [triggers]

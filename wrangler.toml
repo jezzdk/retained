@@ -5,9 +5,9 @@ pages_build_output_dir = "apps/web/dist"
 [[d1_databases]]
 binding = "DB"
 database_name = "retained-db"
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+database_id = "b940d3a6-1bd9-4d99-9139-ab9c56d2e695"
 
 # These are production values. For local development, .dev.vars overrides them.
 [vars]
-APP_URL = "https://retained.pages.dev"
+APP_URL = "https://663f330f.retained-5lw.pages.dev"
 FROM_EMAIL = "no-reply@retained.dev"
