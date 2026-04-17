@@ -9,6 +9,7 @@ database_id = "b940d3a6-1bd9-4d99-9139-ab9c56d2e695"
 
 [vars]
 APP_URL = "https://663f330f.retained-5lw.pages.dev"
+FROM_NAME = "Retained"
 FROM_EMAIL = "no-reply@retained.dev"
 
 [triggers]

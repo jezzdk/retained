@@ -23,7 +23,7 @@ export async function runCron(env: Env): Promise<void> {
 
       await sendEmail({
         apiKey: env.RESEND_API_KEY,
-        from: env.FROM_EMAIL,
+        from: `${env.FROM_NAME} <${env.FROM_EMAIL}>`,
         to: row.email,
         subject: `Time to study — ${articleDomain}`,
         html: studyReminderHtml(row.url, articleDomain, studiedUrl),
@@ -48,7 +48,7 @@ export async function runCron(env: Env): Promise<void> {
 
       await sendEmail({
         apiKey: env.RESEND_API_KEY,
-        from: env.FROM_EMAIL,
+        from: `${env.FROM_NAME} <${env.FROM_EMAIL}>`,
         to: row.email,
         subject: 'Your final test is ready',
         html: finalTestEmailHtml(finalUrl),

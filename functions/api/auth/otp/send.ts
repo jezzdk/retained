@@ -43,7 +43,7 @@ export const onRequestPost: PagesFunction<Env> = async context => {
 
   await sendEmail({
     apiKey: env.RESEND_API_KEY,
-    from: env.FROM_EMAIL,
+    from: `${env.FROM_NAME} <${env.FROM_EMAIL}>`,
     to: email,
     subject: 'Your Retained verification code',
     html: otpEmailHtml(code),

@@ -81,6 +81,7 @@ npm run deploy
 # 5. Set secrets
 wrangler pages secret put ANTHROPIC_API_KEY
 wrangler pages secret put RESEND_API_KEY
+# FROM_NAME and FROM_EMAIL are set in wrangler.toml [vars], not as secrets
 
 # 6. Deploy cron worker
 npm run deploy:cron

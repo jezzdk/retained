@@ -3,6 +3,7 @@ export interface Env {
   ANTHROPIC_API_KEY: string;
   RESEND_API_KEY: string;
   FROM_EMAIL: string;
+  FROM_NAME: string;
   APP_URL: string;
 }
 
