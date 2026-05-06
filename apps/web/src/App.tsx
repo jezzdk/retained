@@ -61,10 +61,19 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <header className="border-b border-gray-200 bg-white">
-        <div className="max-w-2xl mx-auto px-4 py-4 flex items-center gap-2">
-          <span className="text-xl font-bold text-indigo-600">Retained</span>
-          <span className="text-gray-400 text-sm">· spaced retrieval learning</span>
+      <header className="border-b border-gray-100 bg-white/80 backdrop-blur-sm sticky top-0 z-10">
+        <div className="max-w-2xl mx-auto px-4 py-3.5 flex items-center gap-2">
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center shrink-0">
+              <svg viewBox="0 0 20 20" fill="none" className="w-4 h-4">
+                <path d="M10 3C7.24 3 5 5.24 5 8c0 1.86.99 3.49 2.47 4.38L7 15h6l-.47-2.62A5 5 0 0015 8c0-2.76-2.24-5-5-5z" fill="white" opacity=".9"/>
+                <rect x="7.5" y="15" width="5" height="1.5" rx=".75" fill="white" opacity=".7"/>
+              </svg>
+            </div>
+            <span className="text-base font-bold text-gray-900">Retained</span>
+          </div>
+          <span className="text-gray-300 text-sm">·</span>
+          <span className="text-gray-400 text-sm">spaced retrieval learning</span>
         </div>
       </header>
 
