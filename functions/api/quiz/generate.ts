@@ -1,6 +1,6 @@
 import type { Env } from '../../_shared/types';
 import { getSession, jsonError, jsonOk } from '../../_shared/auth';
-import { fetchArticleContent, validateWordCount, truncateContent } from '../../_shared/content';
+import { fetchArticleContent, validateWordCount, truncateContent, estimateQuestionCount } from '../../_shared/content';
 import { generateQuestions } from '../../_shared/claude';
 
 export const onRequestPost: PagesFunction<Env> = async context => {
@@ -33,10 +33,11 @@ export const onRequestPost: PagesFunction<Env> = async context => {
   if (contentError) return jsonError(contentError, 422);
 
   const content = truncateContent(text);
+  const targetCount = estimateQuestionCount(wordCount);
 
   let questions;
   try {
-    questions = await generateQuestions(env.ANTHROPIC_API_KEY, content);
+    questions = await generateQuestions(env.ANTHROPIC_API_KEY, content, targetCount);
   } catch (err) {
     console.error('Claude API error:', err);
     return jsonError('Failed to generate questions. Please try again.', 500);

@@ -27,8 +27,32 @@ const questionSchema = {
   required: ['questions'],
 };
 
-export async function generateQuestions(apiKey: string, content: string): Promise<Question[]> {
+function shuffle<T>(arr: T[]): T[] {
+  const out = [...arr];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
+
+export async function generateQuestions(
+  apiKey: string,
+  content: string,
+  targetCount: number
+): Promise<Question[]> {
   const client = new Anthropic({ apiKey });
+
+  const schema = {
+    ...questionSchema,
+    properties: {
+      questions: {
+        ...questionSchema.properties.questions,
+        minItems: targetCount,
+        maxItems: targetCount,
+      },
+    },
+  };
 
   const response = await client.messages.create({
     model: GENERATION_MODEL,
@@ -38,14 +62,14 @@ export async function generateQuestions(apiKey: string, content: string): Promis
         name: 'generate_questions',
         description:
           'Generate quiz questions from article content to help readers retain information',
-        input_schema: questionSchema,
+        input_schema: schema,
       },
     ],
     tool_choice: { type: 'tool', name: 'generate_questions' },
     messages: [
       {
         role: 'user',
-        content: `Generate between 4 and 8 quiz questions from this article to help readers learn and retain the key information. Use a mix of question types: multiple choice (MCQ, 4 options), free recall, and concept explanation. At least one of each type must be present. The exact number should reflect the length and complexity of the content.
+        content: `Generate exactly ${targetCount} quiz questions from this article to help readers learn and retain the key information. Use a mix of question types: multiple choice (MCQ, 4 options), free recall, and concept explanation. At least one of each type must be present, and the types should be spread throughout the list rather than grouped together.
 
 Requirements:
 - Questions must be answerable from the article alone — no prior knowledge assumed
@@ -65,7 +89,7 @@ ${content}`,
   }
 
   const input = toolUse.input as { questions: Question[] };
-  return input.questions;
+  return shuffle(input.questions);
 }
 
 export async function gradeAnswer(
