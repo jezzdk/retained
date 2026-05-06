@@ -14,7 +14,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "db:init": "wrangler d1 execute retained-db --file=schema/init.sql",
+    "db:init": "wrangler d1 execute retained-db --remote --file=schema/init.sql",
     "db:init:local": "wrangler d1 execute retained-db --local --file=schema/init.sql",
     "deploy": "npm run build && wrangler pages deploy apps/web/dist",
     "deploy:cron": "wrangler deploy --config workers/cron/wrangler.toml"

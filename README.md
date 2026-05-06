@@ -85,10 +85,15 @@ wrangler pages secret put ANTHROPIC_API_KEY
 wrangler pages secret put RESEND_API_KEY
 # FROM_NAME and FROM_EMAIL are set in wrangler.toml [vars], not as secrets
 
-# 6. Deploy cron worker
+# 6. Set secrets for the cron worker (separate from the Pages secrets above)
+cd workers/cron
+wrangler secret put RESEND_API_KEY
+cd ../..
+
+# 7. Deploy cron worker
 npm run deploy:cron
 
-# 7. Redeploy Pages with updated APP_URL
+# 8. Redeploy Pages with updated APP_URL
 npm run deploy
 ```
 

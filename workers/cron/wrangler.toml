@@ -14,3 +14,7 @@ FROM_EMAIL = "no-reply@retained.dev"
 
 [triggers]
 crons = ["0 * * * *"]
+
+[observability.logs]
+enabled = true
+invocation_logs = true
