@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS schedules (
   id                 TEXT PRIMARY KEY,
   session_id         TEXT NOT NULL,
   email              TEXT NOT NULL,
+  unique_email       TEXT NOT NULL,
   url                TEXT NOT NULL,
   questions_json     TEXT NOT NULL,
   pre_answers_json   TEXT,
@@ -34,3 +35,4 @@ CREATE TABLE IF NOT EXISTS schedules (
 CREATE INDEX IF NOT EXISTS idx_otp_email ON otp_attempts(email, created_at);
 CREATE INDEX IF NOT EXISTS idx_schedules_study ON schedules(study_sent, study_at);
 CREATE INDEX IF NOT EXISTS idx_schedules_test ON schedules(test_sent, test_at, studied_at);
+CREATE INDEX IF NOT EXISTS idx_schedules_unique_email ON schedules(unique_email);

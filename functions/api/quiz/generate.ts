@@ -46,10 +46,12 @@ export const onRequestPost: PagesFunction<Env> = async context => {
   const scheduleId = crypto.randomUUID();
   const now = Math.floor(Date.now() / 1000);
 
+  const uniqueEmail = session.email.replace(/\+[^@]*(?=@)/, '');
+
   await env.DB.prepare(
-    'INSERT INTO schedules (id, session_id, email, url, questions_json, created_at) VALUES (?, ?, ?, ?, ?, ?)'
+    'INSERT INTO schedules (id, session_id, email, unique_email, url, questions_json, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)'
   )
-    .bind(scheduleId, session.id, session.email, url, JSON.stringify(questions), now)
+    .bind(scheduleId, session.id, session.email, uniqueEmail, url, JSON.stringify(questions), now)
     .run();
 
   const questionsForClient = questions.map(({ answer: _answer, ...q }) => q);

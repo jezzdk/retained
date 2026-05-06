@@ -97,6 +97,16 @@ npm run deploy:cron
 npm run deploy
 ```
 
+## Database migrations
+
+```bash
+# Local
+wrangler d1 execute retained-db --local --file=schema/migrations/<migration>.sql
+
+# Production
+wrangler d1 execute retained-db --remote --file=schema/migrations/<migration>.sql
+```
+
 ## License
 
 MIT
